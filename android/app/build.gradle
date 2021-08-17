@@ -147,8 +147,8 @@ android {
     }
     signingConfigs {
         debug {
-            storeFile file('debug.keystore')
-            storePassword 'android'
+            storeFile file('your_key_name.keystore')
+            storePassword 'kinect123'
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
