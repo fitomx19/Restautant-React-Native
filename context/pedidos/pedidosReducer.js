@@ -1,6 +1,6 @@
 import {
     SELECCIONAR_PRODUCTO,
-    CONFIRMAR_ORDENAR_PLATILLOS,MOSTRAR_RESUMEN,ELIMINAR_PRODUCTO,PEDIDO_ORDENADO
+    CONFIRMAR_ORDENAR_PLATILLOS,MOSTRAR_RESUMEN,ELIMINAR_PRODUCTO,PEDIDO_ORDENADO,IMPRIMIR_PLATILLOS,LIMPIAR_PLATILLOS
 } from '../../types'
 
 
@@ -16,6 +16,16 @@ export default (state,action) =>{
                 ...state,
                 pedido: [...state.pedido, action.payload]
             }
+        case IMPRIMIR_PLATILLOS:
+                return{
+                    ...state,
+                    imprimir: [...state.pedido, action.payload]
+        }
+        case LIMPIAR_PLATILLOS:
+            return{
+                ...state,
+                pedido: null
+        }
         case MOSTRAR_RESUMEN:
             return{
                 ...state,

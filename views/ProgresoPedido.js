@@ -6,9 +6,13 @@ import { useNavigation } from '@react-navigation/native';
 import PedidoContext from '../context/pedidos/pedidosContext';
 import firebase from '../firebase';
 import Countdown from 'react-countdown';
+import FirebaseContext from '../context/firebase/firebaseContext'
+
+
 
 const ProgresoPedido = () =>{
     const {idPedido} = useContext(PedidoContext);
+    const {menu, obtenerProductos} = useContext(FirebaseContext);
     const [tiempo,guardarTiempo] = useState(0);
     const [completado, guardarCompleato] = useState(false)
     const navigation = useNavigation();
@@ -19,7 +23,8 @@ const ProgresoPedido = () =>{
                 guardarCompleato(doc.data().completado)
             })
         }
-        obtenerProducto()
+        obtenerProducto();
+        obtenerProductos();
     },[])
 
     //muestra el countdows
@@ -50,15 +55,14 @@ const renderer = ({minutes,seconds}) =>{
                  </Text>
                 </>
             )}
-            { completado && (
+          
                 <>
-                <H1 style={styles.textocompletado}>Orden Lista</H1>
-                <H3 style={styles.textocompletado}>Por favor pase a recoger su pedido</H3>
+                
                 <Button style={[globalStyles.boton], {marginTop:100}} rounded block dark onPress={() => navigation.navigate("Nueva Orden")}>
-                    <Text style={globalStyles.botonTexto}>Comenzar una orden nueva</Text>
+                    <Text style={{color:'white'}}>Comenzar una orden nueva</Text>
                 </Button>
                 </>
-            ) }
+            
             </View>
         </Container>
     )

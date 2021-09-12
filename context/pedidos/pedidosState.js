@@ -6,7 +6,8 @@ import {
     CONFIRMAR_ORDENAR_PLATILLOS,
     MOSTRAR_RESUMEN,
     ELIMINAR_PRODUCTO,
-    PEDIDO_ORDENADO
+    PEDIDO_ORDENADO,
+    IMPRIMIR_PLATILLOS,LIMPIAR_PLATILLOS
 } from '../../types'
 
 //pasarle un reducer
@@ -41,6 +42,25 @@ const PedidoState = props => {
             payload: pedido
         })
     }
+
+    //CUANDO EL USUARIO CONFIRMA UNA ORDEN
+    const ImprimirPedido = imprimir =>{
+        dispatch({
+            type: IMPRIMIR_PLATILLOS,
+            payload: imprimir
+        })
+    }
+
+       //CUANDO EL USUARIO CONFIRMA UNA ORDEN
+       const LimpiarPedido = limpiar =>{
+        dispatch({
+            type: IMPRIMIR_PLATILLOS,
+            payload: limpiar
+        })
+    }
+
+
+
     //muestra el total a pagar en el resumen
     const mostrarResumen = total => {
         dispatch({
@@ -69,11 +89,14 @@ const PedidoState = props => {
                 platillo: state.platillo,
                 total: state.total,
                 idPedido: state.idPedido,
+                imprimir: state.imprimir,
                 seleccionarPlatillo,
                 guardarPedido,
                 mostrarResumen,
                 eliminarProducto,
-                pedidoRealizado
+                pedidoRealizado,
+                ImprimirPedido,
+                LimpiarPedido
             }}
         >
             {props.children}

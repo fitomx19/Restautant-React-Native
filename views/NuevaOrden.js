@@ -21,6 +21,22 @@ const NuevaOrden = () =>{
                         </Text>
                </Button>
            </View>
+
+
+           <View style={[globalStyles.contenido,styles.contenido]}>
+               <Button 
+                    style={globalStyles.boton} 
+                    rounded 
+                    onPress={ () => navigation.navigate('ImprimirOrdenes')}
+                    block >
+                        <Text style={globalStyles.botonTexto}>
+                           Imprimir Ordenes
+                        </Text>
+               </Button>
+           </View>
+
+
+          
        </Container>
      
 

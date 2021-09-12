@@ -36,14 +36,14 @@ const Menu = () =>{
         if(categoriaAnterior !== categoria){
             return(
                 <Separator style={styles.Separator}>
-                    <Text style={styles.separadorTexto}>{categoria.toUpperCase()}</Text>
+                    <Text style={styles.separadorTexto}>{categoria}</Text>
                 </Separator>
                 )
              }
         }else{
             return(
                 <Separator style={styles.Separator} >
-                    <Text style={styles.separadorTexto} >{categoria.toUpperCase()}</Text>
+                    <Text style={styles.separadorTexto} >{categoria}</Text>
                 </Separator>
                 )
         }
