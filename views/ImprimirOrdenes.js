@@ -17,6 +17,10 @@ import FirebaseContext from '../context/firebase/firebaseContext'
 import PedidoContext from '../context/pedidos/pedidosContext'
 import { StyleSheet } from 'react-native'
 import pedidosReducer from '../context/pedidos/pedidosReducer'
+import moment from 'moment' 
+
+let date = new Date;
+
 
 const ImprimirOrdenes = () =>{
    
@@ -35,7 +39,9 @@ const ImprimirOrdenes = () =>{
         
     },[]);
     
-
+  
+        
+    
     return(
        <Container style={globalStyles.contenedor}>
           
@@ -43,17 +49,16 @@ const ImprimirOrdenes = () =>{
                    <List >
                        
                         {pedidos?.map((ordenes,i) =>{
-                            const {creado,completado,orden,total,id} = ordenes
-                            var date = new Date(creado * 1000);
-                            var hours = date.getHours();
-                            var minutes = "0" + date.getMinutes();
-                            var seconds = "0" + date.getSeconds();
-                            var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+                            let {creado,completado,orden,total,id} = ordenes
+                           
+                            let formattedTime = moment(creado).format('LLL');
                             //console.log(orden[0])
                             return(
                                 
                                 <Fragment key={id}>
-                                    
+                                    <Separator style={styles.Separator} >
+                                        <Text style={styles.separadorTexto} >{formattedTime}</Text>
+                                    </Separator>
                                     <ListItem onPress ={ () =>{
                                          const ticket = {
                                             orden,total,id,creado,imprimir
@@ -68,10 +73,7 @@ const ImprimirOrdenes = () =>{
                                             <Text>id: {id}</Text>
                                             <Text>Pedido: {orden[0].nombre}</Text>
                                             <Text>Cantidad: {orden[0].cantidad}</Text>
-                                            <Text note nomberOfLines={4}>
-                                              {formattedTime}
-                                             
-                                            </Text>
+                                           
                                            
                                            
                                             

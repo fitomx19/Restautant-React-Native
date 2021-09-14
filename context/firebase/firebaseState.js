@@ -59,7 +59,8 @@ const FirebaseState = props => {
 
         //consultar firebase
           firebase.db
-        .collection('ordenes').onSnapshot(manejarSnapshotPedidos);
+        .collection('ordenes').orderBy('creado').startAt(1528445969388).endAt(9999999999999).limitToLast(35).
+        onSnapshot(manejarSnapshotPedidos);
         
         
 

@@ -1,14 +1,18 @@
-import React, {useContext,useEffect} from 'react'
+import React, {useContext,useEffect,useState} from 'react'
 
 import PedidoContext from '../context/pedidos/pedidosContext'
-import {Alert, StyleSheet} from 'react-native'
+import {Alert, StyleSheet,TextInput} from 'react-native'
 import { Container,Content,List,ListItem, Thumbnail,Text,Left,Body,Button,H1,Footer,FooterTab } from 'native-base'
 import  globalStyles from '../styles/global';
 import { useNavigation } from '@react-navigation/native';
 import firebase from '../firebase';
+
+import moment from 'moment' 
+
+
 const ResumenPedido = () =>{
     const navigation = useNavigation();
-
+    const [text, setText] = useState('');
     //context pedido
     const {pedido,total,mostrarResumen,eliminarProducto,pedidoRealizado} = useContext(PedidoContext)
     useEffect(()=>{
@@ -37,7 +41,9 @@ const ResumenPedido = () =>{
                             completado:false,
                             total: Number(total),
                             orden: pedido,
-                            creado: Date.now()
+                            detalles: text,
+                            creado: moment().valueOf()
+
                         }
                         try {
                             const pedido = await firebase.db.collection('ordenes').add(pedidoObj);
@@ -101,6 +107,13 @@ const ResumenPedido = () =>{
                         </List>
                     )
                })}
+                <TextInput
+        style={{height: 40}}
+        placeholder="Escribe los detalles de el pedido!"
+        onChangeText={text => setText(text)}
+        defaultValue={text}
+      />
+
                 <Text style={globalStyles.cantidad}>Total a Pagar: $ {total}</Text>
 
 <Button
