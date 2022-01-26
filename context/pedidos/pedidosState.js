@@ -7,7 +7,7 @@ import {
     MOSTRAR_RESUMEN,
     ELIMINAR_PRODUCTO,
     PEDIDO_ORDENADO,
-    IMPRIMIR_PLATILLOS,LIMPIAR_PLATILLOS
+    IMPRIMIR_PLATILLOS,LIMPIAR_PLATILLOS,CONTINUAR_PEDIDO
 } from '../../types'
 
 //pasarle un reducer
@@ -37,6 +37,7 @@ const PedidoState = props => {
 
     //CUANDO EL USUARIO CONFIRMA UN PLATILLO
     const guardarPedido = pedido =>{
+        console.log(pedido)
         dispatch({
             type: CONFIRMAR_ORDENAR_PLATILLOS,
             payload: pedido
@@ -51,6 +52,15 @@ const PedidoState = props => {
         })
     }
 
+    //CUando el usuario quiere continuar una orden
+    const ContinuarPedido = pedido =>{
+        console.log(pedido.orden)
+        
+        dispatch({
+            type: CONTINUAR_PEDIDO,
+            payload: pedido.orden
+        })
+    }
        //CUANDO EL USUARIO CONFIRMA UNA ORDEN
        const LimpiarPedido = limpiar =>{
         dispatch({
@@ -91,6 +101,7 @@ const PedidoState = props => {
                 idPedido: state.idPedido,
                 imprimir: state.imprimir,
                 seleccionarPlatillo,
+                ContinuarPedido,
                 guardarPedido,
                 mostrarResumen,
                 eliminarProducto,

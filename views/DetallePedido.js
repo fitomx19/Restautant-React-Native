@@ -286,8 +286,10 @@ import FirebaseContext from '../context/firebase/firebaseContext'
             await  BluetoothEscposPrinter.printText("\r\n",{});
             await  BluetoothEscposPrinter.printText("GRACIAS POR SU VISITA!", {});
             await  BluetoothEscposPrinter.printText("\r\n",{});
-            await  BluetoothEscposPrinter.printText("SIGUENOS EN NUESTRAS REDES SOCIALES", {});
-            await  BluetoothEscposPrinter.printText("Facebook & Instagram @snackslosmiserables", {});
+            await  BluetoothEscposPrinter.printText("SIGUENOS EN NUESTRAS", {});
+            await  BluetoothEscposPrinter.printText("REDES SOCIALES", {});
+            await  BluetoothEscposPrinter.printText("Facebook & Instagram", {});
+            await  BluetoothEscposPrinter.printText("@snackslosmiserables", {});
             await  BluetoothEscposPrinter.printText("\r\n\r\n\r\n",{});
           
             

@@ -13,6 +13,7 @@ import ResumenPedido from './views/ResumenPedido'
 import ProgresoPedido from './views/ProgresoPedido'
 import ImprimirOrdenes from './views/ImprimirOrdenes'
 import DetallePedido from './views/DetallePedido'
+import ModificarPedido from './views/ModificarPedido';
 //Componentes
 import BotonResumen from './components/BotonResumen'
 
@@ -29,6 +30,7 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerStyle:{backgroundColor: '#FFDA00'},headerTitleStyle:{fontWeight: 'bold'},headerTintColor: '#000'}}>
           <Stack.Screen name="Nueva Orden" component={NuevaOrden} options={{title: "Nueva Orden"}} />
+          <Stack.Screen name="ModificarPedido" component={ModificarPedido} options={{title: "Contiinuar Pedido"}} />
           <Stack.Screen name="ImprimirOrdenes" component={ImprimirOrdenes} options={{title: "ImprimirOrdenes"}} />
           <Stack.Screen name="Menu" component={Menu} options={{title: "Menu", headerRight: props => <BotonResumen/>}} />
           <Stack.Screen name="DetallePlatillo" component={DetallePlatillo} options={{title: "Detalle Pedido"}} />

@@ -56,7 +56,7 @@ const Menu = () =>{
                <Content style={{ backgroundColor: '#FFF'}}>
                    <List>
                         {menu?.map((platillo,i) =>{
-                            const {imagen,descripcion,categoria,id,nombre,precio} = platillo
+                            const {descripcion,categoria,id,nombre,precio} = platillo
                             return(
                                 <Fragment key={id}>
                                     {mostrarHeading(categoria, i)}
@@ -66,7 +66,7 @@ const Menu = () =>{
                                         //SE COLOCA 
                                         navigation.navigate("DetallePlatillo");
                                     }}>
-                                        <Thumbnail large square source={{uri: imagen}}/>
+                                        
                                         <Body>
                                             <Text>{nombre}</Text>
                                             <Text note nomberOfLines={2}>

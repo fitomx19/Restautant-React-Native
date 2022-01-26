@@ -18,14 +18,9 @@ import PedidoContext from '../context/pedidos/pedidosContext'
 import { StyleSheet } from 'react-native'
 import pedidosReducer from '../context/pedidos/pedidosReducer'
 import moment from 'moment' 
-
 let date = new Date;
 
-
 const ImprimirOrdenes = () =>{
-   
-    
-
     // Context de firebase
     const {pedidos, obtenerPedidos} = useContext(FirebaseContext);
     const {menu, obtenerProductos} = useContext(FirebaseContext);
@@ -38,23 +33,15 @@ const ImprimirOrdenes = () =>{
         obtenerProductos();
         
     },[]);
-    
-  
-        
-    
     return(
        <Container style={globalStyles.contenedor}>
-          
           <Content style={{ backgroundColor: '#FFF'}}>
                    <List >
-                       
                         {pedidos?.map((ordenes,i) =>{
                             let {creado,completado,orden,total,id} = ordenes
-                           
                             let formattedTime = moment(creado).format('LLL');
                             //console.log(orden[0])
                             return(
-                                
                                 <Fragment key={id}>
                                     <Separator style={styles.Separator} >
                                         <Text style={styles.separadorTexto} >{formattedTime}</Text>
@@ -68,28 +55,20 @@ const ImprimirOrdenes = () =>{
                                         ImprimirPedido(ticket)
                                         navigation.navigate("DetallePedido");
                                     }}>
-                                       
                                         <Body>
                                             <Text>id: {id}</Text>
                                             <Text>Pedido: {orden[0].nombre}</Text>
                                             <Text>Cantidad: {orden[0].cantidad}</Text>
-                                           
-                                           
-                                           
-                                            
                                             <Text>Total ${total}</Text>
                                         </Body>
                                     </ListItem>
-
                                 </Fragment>
-                            )
-                        })}
+                            )})}
                    </List>
                </Content>
        </Container>
     )
 }
-
 const styles = StyleSheet.create({
     Separator:{
         backgroundColor: '#000'

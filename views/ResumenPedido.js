@@ -114,6 +114,13 @@ const ResumenPedido = () =>{
         defaultValue={text}
       />
 
+            <TextInput
+        style={{height: 40}}
+        placeholder="Escribe los detalles de el pedido!"
+        onChangeText={text => setText(text)}
+        defaultValue={text}
+      />
+
                 <Text style={globalStyles.cantidad}>Total a Pagar: $ {total}</Text>
 
 <Button

@@ -23,7 +23,7 @@ const globalStyles = StyleSheet.create({
         fontSize: 30
     },
     imagen:{
-        height: 300,
+        height: 200,
         width: '100%'
 
     },

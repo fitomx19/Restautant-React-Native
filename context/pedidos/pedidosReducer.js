@@ -1,5 +1,5 @@
 import {
-    SELECCIONAR_PRODUCTO,
+    SELECCIONAR_PRODUCTO,CONTINUAR_PEDIDO,
     CONFIRMAR_ORDENAR_PLATILLOS,MOSTRAR_RESUMEN,ELIMINAR_PRODUCTO,PEDIDO_ORDENADO,IMPRIMIR_PLATILLOS,LIMPIAR_PLATILLOS
 } from '../../types'
 
@@ -25,6 +25,11 @@ export default (state,action) =>{
             return{
                 ...state,
                 pedido: null
+        }
+        case CONTINUAR_PEDIDO:
+            return{
+                ...state,
+                pedido: action.payload
         }
         case MOSTRAR_RESUMEN:
             return{
