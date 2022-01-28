@@ -41,7 +41,7 @@ const ModificarPedido = () => {
                <List >
                        
                        {pedidos?.map((ordenes,i) =>{
-                           let {creado,completado,orden,total,id} = ordenes
+                           let {creado,completado,orden,total,id,mesa} = ordenes
                            let formattedTime = moment(creado).format('LLL');
                            //console.log(orden[0])
                            return(
@@ -60,8 +60,10 @@ const ModificarPedido = () => {
                                        navigation.navigate("Menu");
                                    }}>
                                        <Body>
-                                            <Text>Mesa: {i}</Text>
-                                            <Text>id: {id}</Text>
+                                            {mesa? <Text>Mesa: {mesa}</Text>:null}
+                                            {orden[0] ? <Text> {orden[0].nombre}</Text> : null}
+                                            {orden[1] ? <Text> {orden[0].nombre}</Text> : null}
+                                            {orden[2] ? <Text> {orden[0].nombre}</Text> : null}
                                             <Text>Total ${total}</Text>
                                        </Body>
                                    </ListItem>
