@@ -3,7 +3,7 @@ import PedidosReducer from './pedidosReducer'
 import PedidosContext from './pedidosContext'
 import {
     SELECCIONAR_PRODUCTO,
-    CONFIRMAR_ORDENAR_PLATILLOS,
+    CONFIRMAR_ORDENAR_PLATILLOS,LIMPIAR_TODO,
     MOSTRAR_RESUMEN,
     ELIMINAR_PRODUCTO,
     PEDIDO_ORDENADO,
@@ -19,7 +19,9 @@ const PedidoState = props => {
         pedido: [],
         platillo: null,
         total:0,
-        idPedido: ''
+        idPedido: '',
+        id: '',
+       
         }
 
     // use Reducer con dispatch para ejecutar las funciones
@@ -54,12 +56,17 @@ const PedidoState = props => {
 
     //CUando el usuario quiere continuar una orden
     const ContinuarPedido = pedido =>{
-        console.log(pedido.orden)
-        
-        dispatch({
-            type: CONTINUAR_PEDIDO,
-            payload: pedido.orden
-        })
+        console.log(pedido)
+        console.log(pedido.id)
+        if(pedido.id){
+            dispatch({
+                type: CONTINUAR_PEDIDO,
+                payload: pedido
+            })     
+        }else{
+            null
+        }
+       
     }
        //CUANDO EL USUARIO CONFIRMA UNA ORDEN
        const LimpiarPedido = limpiar =>{
@@ -92,6 +99,12 @@ const PedidoState = props => {
             payload:id
         })
     }
+    const limpiar = limpiar =>{
+        dispatch({
+            type:PEDIDO_ORDENADO,
+            payload:limpiar
+        })
+    }
     return (
         <PedidosContext.Provider
             value={{
@@ -100,10 +113,13 @@ const PedidoState = props => {
                 total: state.total,
                 idPedido: state.idPedido,
                 imprimir: state.imprimir,
+                id: state.id,
+                
                 seleccionarPlatillo,
                 ContinuarPedido,
                 guardarPedido,
                 mostrarResumen,
+                limpiar,
                 eliminarProducto,
                 pedidoRealizado,
                 ImprimirPedido,

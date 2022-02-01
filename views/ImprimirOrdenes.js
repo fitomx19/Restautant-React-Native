@@ -57,8 +57,8 @@ const ImprimirOrdenes = () =>{
                                     }}>
                                         <Body>
                                             <Text>id: {id}</Text>
-                                            <Text>Pedido: {orden[0].nombre}</Text>
-                                            <Text>Cantidad: {orden[0].cantidad}</Text>
+                                            <Text>Pedido: {orden ? orden[0].nombre : null}</Text>
+                                            <Text>Cantidad: {orden ? orden[0].cantidad:null}</Text>
                                             <Text>Total ${total}</Text>
                                         </Body>
                                     </ListItem>

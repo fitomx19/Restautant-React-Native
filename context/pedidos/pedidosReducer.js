@@ -1,5 +1,5 @@
 import {
-    SELECCIONAR_PRODUCTO,CONTINUAR_PEDIDO,
+    SELECCIONAR_PRODUCTO,CONTINUAR_PEDIDO,LIMPIAR_TODO,
     CONFIRMAR_ORDENAR_PLATILLOS,MOSTRAR_RESUMEN,ELIMINAR_PRODUCTO,PEDIDO_ORDENADO,IMPRIMIR_PLATILLOS,LIMPIAR_PLATILLOS
 } from '../../types'
 
@@ -29,7 +29,8 @@ export default (state,action) =>{
         case CONTINUAR_PEDIDO:
             return{
                 ...state,
-                pedido: action.payload
+                pedido: action.payload.orden,
+                id: action.payload.id
         }
         case MOSTRAR_RESUMEN:
             return{
@@ -46,8 +47,18 @@ export default (state,action) =>{
                 ...state,
                 pedido: [],
                 total:0,
-                idPedido: action.payload
+                idPedido: null,
+                id:""
             }
+            case LIMPIAR_TODO:
+                return{
+                    ...state,
+                    pedido: [],
+                    total:0,
+                    idPedido: "",
+                    id: ""
+                }
+
         default:    
             return state;
 

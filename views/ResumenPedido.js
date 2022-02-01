@@ -16,21 +16,23 @@ const ResumenPedido = () =>{
     const [mesa, setMesa] = useState('');
     const [comensales, setComensales] = useState('');
     const [bebidas, setBebidas] = useState('');
-
     const [selectedValue, setSelectedValue] = useState("-seleccione mesa-");
     const [selectedValue2, setSelectedValue2] = useState("-¿hay bebidas?-");
     const [selectedValue3, setSelectedValue3] = useState("-Numero de comensales-");
     //context pedido
-    const {pedido,total,mostrarResumen,eliminarProducto,pedidoRealizado} = useContext(PedidoContext)
+    const {pedido,total,id,mostrarResumen,eliminarProducto,pedidoRealizado,limpiar} = useContext(PedidoContext)
     useEffect(()=>{
         calcularTotal();
     },[pedido])
     const calcularTotal = () =>{
         let nuevoTotal = 0;
         nuevoTotal = pedido.reduce((nuevoTotal,articulo) => nuevoTotal + articulo.total, 0)
-        console.log(nuevoTotal)
+        //console.log(nuevoTotal)
+        //console.log(typeof id)
         mostrarResumen(nuevoTotal)
     }
+    let pedido2 = pedido
+    //console.log(pedido2)
 
     //redireccion a progreso de pedido
     const progresoPedido = () =>{
@@ -43,25 +45,49 @@ const ResumenPedido = () =>{
                     onPress: async() =>{
                         //escribir en firebase 
                         //crear un objeto
+                        console.log(pedido)
                         const pedidoObj = {
                             tiempoentrega: 0,
                             completado:false,
                             total: Number(total),
-                            orden: pedido,
+                            orden: pedido2,
                             detalles: text,
                             mesa:mesa,
                             bebidas:bebidas,
                             comensales:comensales,
                             creado: moment().valueOf()
                         }
-                        try {
-                            const pedido = await firebase.db.collection('ordenes').add(pedidoObj);
-                            pedidoRealizado(pedido.id)
-                        } catch (error) {
-                            console.log(error)
+
+                       
+                        if(id !== ""){
+                            try {
+                                const pedidoObjEdit = {
+                                    tiempoentrega: 0,
+                                    completado:false,
+                                    total: Number(total),
+                                    orden: pedido2,
+                                    detalles: text,
+                                    mesa:mesa,
+                                    bebidas:bebidas,
+                                    comensales:comensales,
+                                }
+                                const pedido = await  firebase.db.collection('ordenes').doc(id).update(pedidoObjEdit)
+                                limpiar()
+                                console.log("sirve?")
+                            } catch (error) {
+                                console.log(error)
+                            }  
+                        }else if(id == ""){
+                            try {
+                                const pedido = await firebase.db.collection('ordenes').add(pedidoObj);
+                                limpiar()
+                               
+                            } catch (error) {
+                                console.log(error)
+                            }
                         }
                         //redireccionar a progreso
-                        navigation.navigate("ProgresoPedido")
+                        navigation.navigate("Nueva Orden")
                     }
                 },
                 {
@@ -128,7 +154,7 @@ const ResumenPedido = () =>{
         style={{ height: 50, width: 150 }}
         onValueChange={(itemValue, itemIndex) => setMesa(itemValue)}
       >
-           
+        <Picker.Item label="-Seleccinoar-" value="0" />
         <Picker.Item label="Mesa 1" value="1" />
         <Picker.Item label="Mesa 2" value="2" />
         <Picker.Item label="Mesa 3" value="3" />
@@ -151,8 +177,9 @@ const ResumenPedido = () =>{
         style={{ height: 50, width: 250 }}
         onValueChange={(itemValue2, itemIndex) => setBebidas(itemValue2)}
       >
-        <Picker.Item label="Si hay bebidas" value="1" />
-        <Picker.Item label="No hay bebidas" value="2" />
+        <Picker.Item label="--Seleccionar--" value="1" />
+        <Picker.Item label="No hay bebidas" value="1" />
+        <Picker.Item label="Si hay bebidas" value="2" />
       </Picker>
     <Text>¿Cuántos comensales?</Text>
       <Picker
@@ -160,6 +187,7 @@ const ResumenPedido = () =>{
         style={{ height: 50, width: 250 }}
         onValueChange={(itemValue3, itemIndex) => setComensales(itemValue3)}
       >
+        <Picker.Item label="-Seleccionar-" value="1" />
         <Picker.Item label="1" value="1" />
         <Picker.Item label="2" value="2" />
         <Picker.Item label="3" value="3" />

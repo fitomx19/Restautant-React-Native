@@ -51,9 +51,9 @@ const ModificarPedido = () => {
                                    </Separator>
                                    <ListItem onPress ={ () =>{
                                         const ticket = {
-                                           orden
+                                           orden,id
                                        }
-                                       //console.log(pedido)
+                                       console.log(id)
                                        //Navegar hacia el Resumen
                                        console.log(ticket)
                                        ContinuarPedido(ticket)

@@ -1,11 +1,16 @@
-import React from 'react'
+import React,{useContext,useEffect} from 'react'
 import {View, StyleSheet} from 'react-native'
 import {Button,Text, Container } from 'native-base'
 import globalStyles  from '../styles/global'
 import {  useNavigation } from '@react-navigation/native'
+import PedidoContext from '../context/pedidos/pedidosContext'
 
 const NuevaOrden = () =>{
     const navigation = useNavigation();
+    const {pedido,id,limpiar} = useContext(PedidoContext)
+    useEffect(()=>{
+        limpiar();
+    },[])
     return(
       
 
