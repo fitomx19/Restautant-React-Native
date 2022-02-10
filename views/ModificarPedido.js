@@ -1,4 +1,5 @@
-import React, {useContext,useEffect,Fragment} from 'react'
+
+import React, {useContext,useEffect,Fragment,useState} from 'react'
 import { useNavigation } from '@react-navigation/native'
 import {
     Container,
@@ -25,22 +26,43 @@ const ModificarPedido = () => {
     const {pedidos, obtenerPedidos} = useContext(FirebaseContext);
     const {pedido,ContinuarPedido} = useContext(PedidoContext)
     const navigation = useNavigation();
-
+    const [pedidoOrdenado, setordenarPedido] = useState([]);
 
     useEffect(() =>{
         obtenerPedidos();
         //obtenerProductos();
+        ordenarPedidos();
         
     },[]);
+    let auxiliar = []
+    let arregloOrdenado = []
+    let items = []
+
+    var ordenarPedidos = function () {
+        for (let i = 0; i < pedidos.length; i++) {
+            auxiliar.push(pedidos[i].creado)
+         }
+ 
+         console.log(auxiliar)
+         auxiliar.sort(function(a, b){return b - a});
+         console.log(auxiliar)
+ 
+         arregloOrdenado = auxiliar.map(orden => {
+             return pedidos.find(x => x.creado === orden)
+           })
+         setordenarPedido(arregloOrdenado);
+  };
+
+  console.log(pedidoOrdenado)
 
     return ( 
     <>
           <Container style={globalStyles.contenedor}>
            <Content style={globalStyles.contenido}>
-               <Text style={globalStyles.titulo}>Continuar Pedido</Text>
+              
                <List >
                        
-                       {pedidos?.map((ordenes,i) =>{
+                       {pedidoOrdenado?.map((ordenes,i) =>{
                            let {creado,completado,orden,total,id,mesa} = ordenes
                            let formattedTime = moment(creado).format('LLL');
                            //console.log(orden[0])

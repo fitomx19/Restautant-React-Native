@@ -45,8 +45,11 @@ una con el Metro y otra con el launcher de Android
 # Iniciar METRO
 npm run start
 
-# Iniciar android
-npx react-native run-android
+# Iniciar androinpx react-native run-android
+
+# Renderizar app 
+Haz los pasos necesarios para obtener tu clave 
+cd android && ./gradlew assembleRelease
 ```
 Este es unicamente el entorno de desarrollo
 ## Contribucion

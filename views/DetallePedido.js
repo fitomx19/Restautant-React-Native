@@ -11,6 +11,7 @@
      DeviceEventEmitter,
      NativeEventEmitter,
      Switch,
+     TextInput,
      TouchableOpacity,
      Dimensions,
      ToastAndroid} from 'react-native';
@@ -25,19 +26,19 @@
         Left,
         Body
     } from 'native-base';
- import {BluetoothEscposPrinter, BluetoothManager, BluetoothTscPrinter} from "react-native-bluetooth-escpos-printer";
- import { img64 } from '../components/img64';
- import { useNavigation } from '@react-navigation/native'
- import PedidoContext from '../context/pedidos/pedidosContext'
-import firebase from '../firebase';
+    import {BluetoothEscposPrinter, BluetoothManager, BluetoothTscPrinter} from "react-native-bluetooth-escpos-printer";
+    import { img64 } from '../components/img64';
+    import { useNavigation } from '@react-navigation/native'
+    import PedidoContext from '../context/pedidos/pedidosContext'
+    import firebase from '../firebase';
+    import FirebaseContext from '../context/firebase/firebaseContext'
+    var {height, width} = Dimensions.get('window');
 
-import FirebaseContext from '../context/firebase/firebaseContext'
-
-
- var {height, width} = Dimensions.get('window');
-
+   
  export default class DetallePedido extends Component {
- 
+    
+   
+
     static contextType = PedidoContext
    
 
@@ -53,7 +54,8 @@ import FirebaseContext from '../context/firebase/firebaseContext'
              bleOpend: false,
              loading: true,
              boundAddress: '',
-             debugMsg: ''
+             debugMsg: '',
+             propina: 0
          }
      }
      
@@ -61,7 +63,7 @@ import FirebaseContext from '../context/firebase/firebaseContext'
 
      componentDidMount() {
 
-            
+      
             
          BluetoothManager.isBluetoothEnabled().then((enabled)=> {
              this.setState({
@@ -199,7 +201,7 @@ import FirebaseContext from '../context/firebase/firebaseContext'
          return items;
      }
     
- 
+     
      render() {
             let ticket = this.context;
             
@@ -267,7 +269,7 @@ import FirebaseContext from '../context/firebase/firebaseContext'
                   await  BluetoothEscposPrinter.printPic(img32, {width: 400});
             await  BluetoothEscposPrinter.printText("\r\n",{});
             //await  BluetoothEscposPrinter.printText("Horario: ", {});
-            await  BluetoothEscposPrinter.printText("Direccion: Puerto Acapulco numero 8 col ampl. Casas Alemán", {});
+            await  BluetoothEscposPrinter.printText("Direccion: Puerto Acapulco numero 8 col ampl. Casas Aleman", {});
             await  BluetoothEscposPrinter.printText("\r\n",{});
     
             await  BluetoothEscposPrinter.printText("\r\n",{});
@@ -286,11 +288,19 @@ import FirebaseContext from '../context/firebase/firebaseContext'
                 await  BluetoothEscposPrinter.printText("Precio: $" + aux[i].precio + ".00",{});
                 await  BluetoothEscposPrinter.printText("\r\n\r\n\r\n",{});
             }
-            await  BluetoothEscposPrinter.printText("Subtotal: $" + parseInt(total-total*0.10) + ".00", {});
+            await  BluetoothEscposPrinter.printText("Subtotal: $" + parseInt(total)-(parseInt(total)*0.16) + ".00", {});
             await  BluetoothEscposPrinter.printText("\r\n",{});
-            await  BluetoothEscposPrinter.printText("IVA: $" + parseInt((total-total*0.10)*0.16) + ".00", {});
+            await  BluetoothEscposPrinter.printText("IVA: $" + parseInt((total*0.16)) + ".00", {});
             await  BluetoothEscposPrinter.printText("\r\n",{});
-            await  BluetoothEscposPrinter.printText("Total: $" + parseInt((total-total*0.10)+((total-total*0.10)*0.16)) + ".00", {});
+         
+          
+            if(this.state.propina){
+                await  BluetoothEscposPrinter.printText("Propina: $" + parseFloat((total)*(parseFloat(this.state.propina)/100)) + ".00", {});
+                await  BluetoothEscposPrinter.printText("Total: $" + parseFloat((total))+parseFloat((total)*(parseFloat(this.state.propina)/100)) + ".00", {});
+            }else{
+                await  BluetoothEscposPrinter.printText("Total: $" + parseFloat((total)) + ".00", {});
+            }
+
             await  BluetoothEscposPrinter.printText("\r\n",{});
             await  BluetoothEscposPrinter.printText("GRACIAS POR SU VISITA!", {});
             await  BluetoothEscposPrinter.printText("\r\n",{});
@@ -314,6 +324,12 @@ import FirebaseContext from '../context/firebase/firebaseContext'
         
         
             />
+        <Text style={styles.title}> <Text>  Insertar Propina</Text> </Text>
+        <TextInput style={styles.margen}
+        onChangeText={(text) => this.setState({ propina: text})}
+        
+      />
+        <Text> {this.state.propina ? <Text>Propina: {this.state.propina}%</Text>: null}</Text>
              </ScrollView>
          );
      }
@@ -397,6 +413,12 @@ import FirebaseContext from '../context/firebase/firebaseContext'
          flex:1,
          textAlign:"left"
      },
+     margen:{
+        height: 40,
+        margin: 12,
+        borderWidth: 1,
+        padding: 10,
+    },
      address:{
          flex:1,
          textAlign:"right"

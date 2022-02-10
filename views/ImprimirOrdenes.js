@@ -1,4 +1,4 @@
-import React, {useContext,useEffect,Fragment} from 'react'
+import React, {useContext,useEffect,Fragment,useState} from 'react'
 import { useNavigation } from '@react-navigation/native'
 import {
     Container,
@@ -26,21 +26,63 @@ const ImprimirOrdenes = () =>{
     const {menu, obtenerProductos} = useContext(FirebaseContext);
     const {imprimir, ImprimirPedido} = useContext(PedidoContext)
     const {limpiar, LimpiarPedido} = useContext(PedidoContext)
+    const [pedidoOrdenado, setordenarPedido] = useState([]);
+
     //Hook para reedireccionar
     const navigation = useNavigation();
     useEffect(() =>{
         obtenerPedidos();
         obtenerProductos();
+        ordenarPedidos();
         
     },[]);
+
+    let auxiliar = []
+    let arregloOrdenado = []
+    let items = []
+
+    var ordenarPedidos = function () {
+        for (let i = 0; i < pedidos.length; i++) {
+            auxiliar.push(pedidos[i].creado)
+         }
+ 
+         console.log(auxiliar)
+         auxiliar.sort(function(a, b){return b - a});
+         console.log(auxiliar)
+ 
+         arregloOrdenado = auxiliar.map(orden => {
+             return pedidos.find(x => x.creado === orden)
+           })
+         setordenarPedido(arregloOrdenado);
+  };
+
+  console.log(pedidoOrdenado)
+      /*
+    objs = [
+    { order: 1, id: 121 },
+    { order: 2, id: 122 },
+    { order: 3, id: 123 },
+    { order: 4, id: 124 },
+    { order: 5, id: 125 },]
+    
+    orden = [5, 3, 2, 4, 1]
+
+                let items = orden.map(orden => {
+            return objs.find(x => x.order === orden)
+            })
+      */
+
     return(
        <Container style={globalStyles.contenedor}>
           <Content style={{ backgroundColor: '#FFF'}}>
                    <List >
-                        {pedidos?.map((ordenes,i) =>{
-                            let {creado,completado,orden,total,id} = ordenes
+
+
+                        {pedidoOrdenado?.map((ordenes,i) =>{
+                            let {creado,orden,total,id} = ordenes
+                            //later
                             let formattedTime = moment(creado).format('LLL');
-                            //console.log(orden[0])
+
                             return(
                                 <Fragment key={id}>
                                     <Separator style={styles.Separator} >
