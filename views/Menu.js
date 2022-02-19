@@ -56,7 +56,7 @@ const Menu = () =>{
                <Content style={{ backgroundColor: '#FFF'}}>
                    <List>
                         {menu?.map((platillo,i) =>{
-                            const {descripcion,categoria,id,nombre,precio} = platillo
+                            const {descripcion,categoria,id,nombre,precio,imagen} = platillo
                             return(
                                 <Fragment key={id}>
                                     {mostrarHeading(categoria, i)}
@@ -68,6 +68,7 @@ const Menu = () =>{
                                     }}>
                                         
                                         <Body>
+                                        <Thumbnail square small source={{ uri: imagen }} />
                                             <Text>{nombre}</Text>
                                             <Text note nomberOfLines={2}>
                                                 {descripcion}
